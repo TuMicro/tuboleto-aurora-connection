@@ -1,4 +1,13 @@
-# Connect to a wallet using Wallet Connect v1
+First of all (this will install yarn)
+
+```
+nvm install 16.13.2
+nvm use 16.13.2
+npm i -g corepack
+corepack enable
+```
+
+# Overview Connect to a wallet using Wallet Connect v1
 
 This is an example repo to show how to connect a React app to an app using Wallet Connect version 1.
 
