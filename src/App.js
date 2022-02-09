@@ -36,7 +36,8 @@ class App extends React.Component {
         const provider = new WalletConnectProvider({
           rpc: {
             // 44787: "https://alfajores-forno.celo-testnet.org",
-            42220: "https://forno.celo.org", // from: https://docs.celo.org/getting-started/wallets/using-metamask-with-celo/manual-setup
+            // 42220: "https://forno.celo.org", // from: https://docs.celo.org/getting-started/wallets/using-metamask-with-celo/manual-setup
+            1313161554: "https://mainnet.aurora.dev",
           },
         });
     
@@ -50,7 +51,7 @@ class App extends React.Component {
           console.log(accounts);
         });
     
-        this.setState({provider, kit});
+        this.setState({provider, kit}); // equivale a this.setState({provider : provider, kit : kit});
       }
 
       const amountStr = this.getAmountFromQueryParams();
@@ -79,14 +80,40 @@ class App extends React.Component {
     try {
       let kit = this.state.kit;
   
+      // 2 recomendaciones:
+      let x = 5; // Evitar manejar números con js (así sean enteros o flotantes)
+                 // Todo mantenerlo en números enteros (wei) lo más que se pueda, cuando queramos mostrar algo en UI usar funciones como 
+                 // formatEther.
+      // Para lograr esto:
+        // Usar clases de manejo de números enteros grandes: BigNumber (disponible luego de instalar la librería ethers: 'yarn add ethers')
+        // Ejm: BigNumber.from(10).pow(18).mul(2).add(BigNumber.from(10).pow(18))
+        // Ejm: BigNumber.from(1_000_000)
+
       let amount = kit.web3.utils.toWei(amountStr, 'ether');
-  
+
       const stabletoken = await kit.contracts.getStableToken();
   
       const tx = await stabletoken.transfer(this.state.someAddress, amount).send(
         {feeCurrency: stabletoken.address}
       );
       const receipt = await tx.waitReceipt();
+
+      // REEMPLAZAR las 3 líneas anteriores por:
+      
+      // Alternativamente leer la guía de walletConnect v1 para una forma que no usa ethers: 
+      // https://docs.walletconnect.com/quick-start/dapps/node#send-transaction-eth_sendtransaction
+      
+      // El siguiente código es una forma que usa la librería ethers:
+      // Revisar esto primero: https://docs.walletconnect.com/quick-start/dapps/web3-provider
+      // Si es necesario, revisar: https://docs.ethers.io/v5/getting-started/
+      // Si es necesario, tmb revisar https://github.com/ethers-io/ethers.js/issues/775#issuecomment-608085004 para ver como obtener el signer
+      // const signer = provider.getSigner(); // este provider debe ser un objeto de la librería ethers
+      // const tx = signer.sendTransaction({
+      //     to: "0x...", // a quien se le envia el token nativo
+      //     value: amount, // cantidad en wei
+      // });
+      // // obtener el receipt así:
+      // const receipt = await resp.wait();
   
       console.log(receipt);
       // alert(JSON.stringify(receipt));
@@ -109,7 +136,7 @@ class App extends React.Component {
   }
 
   openTuBoleto = (amountStr) => {
-    document.location = "tuboleto://topup?amount=" + amountStr;
+    document.location = "tuboleto://topup?amount=" + amountStr; // https://google.com/? Aquí https es el esquema
   }
 
   disconnect = async() => {
@@ -191,7 +218,7 @@ class App extends React.Component {
 
           <p style={{
             fontSize: '8px',
-          }}>TuBoleto - Aurora connector v0.0.17</p>
+          }}>TuBoleto - Aurora connector v0.0.1</p>
         </header>
       </div>
     )
