@@ -18,8 +18,8 @@ const firebaseConfig = {
   projectId: "tumicro-1203",
   storageBucket: "tumicro-1203.appspot.com",
   messagingSenderId: "341269335857",
-  appId: "1:341269335857:web:9f49478d06096617d22a10",
-  measurementId: "G-FW65VSM068"
+  appId: "1:341269335857:web:8e9eb894a3e4678bd22a10",
+  measurementId: "G-XM3BHNJR12"
 };
 
 // Initialize Firebase

@@ -42,9 +42,21 @@ This example was started with [Create React App](https://reactjs.org/docs/create
 
 ## Other useful commands:
 
-yarn add firebase
-firebase init hosting
+
+In case you dont have firebase installed:
+
+```
+npm install -g firebase-tools
+firebase login
+```
 
 Deploy:
 
+```
 yarn build && firebase deploy --only hosting && time /t
+```
+
+## Other commands
+
+yarn add firebase
+firebase init hosting
