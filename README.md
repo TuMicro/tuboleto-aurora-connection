@@ -9,7 +9,7 @@ corepack enable
 
 # Overview: Connect to a wallet using Wallet Connect v1
 
-This is an example repo to show how to connect a React app to an app using Wallet Connect version 1.
+This repository contains the source code for the connector and top-up website for the TuBoleto app using your Aurora wallet through Wallet Connect v1.
 
 The relevant code is in `./src/App.js`.
 
