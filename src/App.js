@@ -146,6 +146,7 @@ class App extends React.Component {
   }
 
   openTuBoleto = (amountStr) => {
+    console.log("openingn tuboleto link");
     document.location = "tuboleto://topup?amount=" + amountStr; // https://google.com/? Aquí https es el esquema
   }
 
