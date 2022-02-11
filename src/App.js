@@ -27,7 +27,7 @@ class App extends React.Component {
     }
 
     this.connect = this.connect.bind(this)
-    this.sendcUSD = this.sendcUSD.bind(this)
+    this.sendAETH = this.sendAETH.bind(this)
     this.disconnect = this.disconnect.bind(this)
   }
 
@@ -57,8 +57,8 @@ class App extends React.Component {
 
       const amountStr = this.getAmountFromQueryParams();
 
-      // TODO: maybe trigger sendcUSD automatically
-      this.sendcUSD(amountStr);
+      // TODO: maybe trigger sendAETH automatically
+      this.sendAETH(amountStr);
 
     } catch (e) {
       console.error(e);
@@ -66,9 +66,9 @@ class App extends React.Component {
 
   }
 
-  sendcUSD = async (amountStr) => {
+  sendAETH = async (amountStr) => {
     if (this.state.trLoading) {
-      console.log("There is already a transaction in progress");
+      console.log("There is a transaction already in progress");
       return;
     }
 
@@ -132,7 +132,7 @@ class App extends React.Component {
     } catch (e) {
       if (e.message.indexOf("execution reverted: transfer value exceeded balance of sender") !== -1) {
         // not enough balance
-        alert("Lo siento, no tienes suficientes Aurora Dólares 😢");
+        alert("Sorry, you don't have enough AETH 😢");
       } else {
         console.log(e);
         console.error(e);
@@ -146,7 +146,7 @@ class App extends React.Component {
   }
 
   openTuBoleto = (amountStr) => {
-    console.log("openingn tuboleto link");
+    console.log("opening tuboleto link");
     document.location = "tuboleto://topup?amount=" + amountStr; // https://google.com/? Aquí https es el esquema
   }
 
@@ -179,12 +179,12 @@ class App extends React.Component {
       conectionDependantContent = (
         <>
           <div>
-            <button onClick={() => this.sendcUSD(amountStr)}>Reintentar el envío de {amountStr} cUSD (aprox. {aproxPEN.toFixed(2)} soles)</button>
+            <button onClick={() => this.sendAETH(amountStr)}>🔁 Retry sending {amountStr} AETH to top up TuBoleto</button>
           </div>
           <p>
             <span style={{
               fontSize: '14px',
-            }}>🟢 Billetera conectada</span>
+            }}>🟢 Wallet Connected</span>
             <br />
             <span style={{
               fontSize: '12px',
@@ -192,12 +192,12 @@ class App extends React.Component {
           </p>
 
 
-          <button onClick={() => this.disconnect()}>Desconectar</button>
+          <button onClick={() => this.disconnect()}>Disconnect</button>
         </>
       )
     } else {
       conectionDependantContent = (<div>
-        <button onClick={() => this.connect()}>Conectar Billetera</button>
+        <button onClick={() => this.connect()}>Connect Wallet</button>
       </div>)
     }
 
@@ -216,7 +216,7 @@ class App extends React.Component {
           {
             (
               this.state.trLoading ?
-                "Cargando... ✌️" :
+                "Loading... ✌️" :
                 <>
                   {conectionDependantContent}
                   <br />
@@ -229,7 +229,7 @@ class App extends React.Component {
 
           <p style={{
             fontSize: '8px',
-          }}>TuBoleto - Aurora connector v0.0.1</p>
+          }}>TuBoleto - Aurora connector v0.0.2</p>
         </header>
       </div>
     )
